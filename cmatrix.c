@@ -214,6 +214,90 @@ matrix* Mtrans(matrix* a)
 	return at;
 }
 
+matrix* Mplus(matrix* a, matrix* b)
+{
+	matrix* c;
+	c = (matrix*)malloc(sizeof(matrix));
+	c->A = (double**)malloc(a->m * sizeof(double));
+	for (int i = 0; i < a->m; i++)
+	{
+		c->A[i] = (double*)malloc(a->n * sizeof(double));
+	}
+	c->m = a->m;
+	c->n = a->n;
+	for (int i = 0; i < a->m; i++)
+	{
+		for (int j = 0; j < a->n; j++)
+		{
+			c->A[i][j] = a->A[i][j] + b->A[i][j];
+		}
+	}
+	return c;
+}
+
+matrix* Mminus(matrix* a, matrix* b)
+{
+	matrix* c;
+	c = (matrix*)malloc(sizeof(matrix));
+	c->A = (double**)malloc(a->m * sizeof(double));
+	for (int i = 0; i < a->m; i++)
+	{
+		c->A[i] = (double*)malloc(a->n * sizeof(double));
+	}
+	c->m = a->m;
+	c->n = a->n;
+	for (int i = 0; i < a->m; i++)
+	{
+		for (int j = 0; j < a->n; j++)
+		{
+			c->A[i][j] = a->A[i][j] - b->A[i][j];
+		}
+	}
+	return c;
+}
+
+matrix* Mdotpro(matrix* a, matrix* b)
+{
+	matrix* c;
+	c = (matrix*)malloc(sizeof(matrix));
+	c->A = (double**)malloc(a->m * sizeof(double));
+	for (int i = 0; i < a->m; i++)
+	{
+		c->A[i] = (double*)malloc(a->n * sizeof(double));
+	}
+	c->m = a->m;
+	c->n = a->n;
+	for (int i = 0; i < a->m; i++)
+	{
+		for (int j = 0; j < a->n; j++)
+		{
+			c->A[i][j] = (a->A[i][j]) * (b->A[i][j]);
+		}
+	}
+	return c;
+}
+
+matrix* Mdiv(matrix* a, matrix* b)
+{
+	matrix* c;
+	c = (matrix*)malloc(sizeof(matrix));
+	c->A = (double**)malloc(a->m * sizeof(double));
+	for (int i = 0; i < a->m; i++)
+	{
+		c->A[i] = (double*)malloc(a->n * sizeof(double));
+	}
+	c->m = a->m;
+	c->n = a->n;
+	for (int i = 0; i < a->m; i++)
+	{
+		for (int j = 0; j < a->n; j++)
+		{
+			c->A[i][j] = a->A[i][j] / b->A[i][j];
+		}
+	}
+	return c;
+}
+
 void Mfree(matrix* a)
 {
 	for (int i = 0; i < a->m; i++)

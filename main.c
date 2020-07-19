@@ -11,7 +11,7 @@ int main()
 	
 	printf("输入的矩阵为：\n");
 	Mprintf(d);
-	matrix* dinv, * dt, * ddt, * ddinv;
+	matrix* dinv, * dt, * ddt, * ddinv, * dprd, * dmd, * ddd, * dpld;
 	dinv = Minv(d);
 	printf("矩阵逆为：\n");
 	Mprintf(dinv);
@@ -24,12 +24,28 @@ int main()
 	ddinv = Mmulti(d, dinv);
 	printf("矩阵与逆相乘为：\n");
 	Mprintf(ddinv);
+	dprd = Mdotpro(d, d);
+	printf("矩阵点乘为：\n");
+	Mprintf(dprd);
+	ddd = Mdiv(d, d);
+	printf("矩阵点除为：\n");
+	Mprintf(ddd);
+	dmd = Mminus(d, d);
+	printf("矩阵相减为：\n");
+	Mprintf(dmd);
+	dpld = Mplus(d, d);
+	printf("矩阵相加为：\n");
+	Mprintf(dpld);
 
 	Mfree(d);
 	Mfree(dt);
 	Mfree(dinv);
 	Mfree(ddt);
 	Mfree(ddinv);
+	Mfree(dprd);
+	Mfree(ddd);
+	Mfree(dmd);
+	Mfree(dpld);
 
 	return 0;
 }

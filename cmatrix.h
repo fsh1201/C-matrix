@@ -29,3 +29,11 @@ matrix* Mmulti(matrix* a, matrix* b);
 matrix* Mtrans(matrix* a);
 /*释放矩阵*/
 void Mfree(matrix* a);
+/*矩阵相加*/
+matrix* Mplus(matrix* a, matrix* b);
+/*矩阵相减*/
+matrix* Mminus(matrix* a, matrix* b);
+/*矩阵点乘*/
+matrix* Mdotpro(matrix* a, matrix* b);
+/*矩阵点除*/
+matrix* Mdiv(matrix* a, matrix* b);
