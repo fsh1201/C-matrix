@@ -12,32 +12,35 @@ double hhlx(double** arr, int na)
 		double s = 0;
 		for (int i = 0; i < na; i++)
 		{
-			double** arr1;
-			arr1 = (double**)malloc((na - 1) * sizeof(double));
-			for (int i = 0; i < na - 1; i++)
+			if (arr[0][i] != 0)
 			{
-				arr1[i] = (double*)malloc((na - 1) * sizeof(double));
-			}
-			for (int j = 1; j < na; j++)
-			{
-				for (int k = 0; k < na - 1; k++)
+				double** arr1;
+				arr1 = (double**)malloc((na - 1) * sizeof(double));
+				for (int i = 0; i < na - 1; i++)
 				{
-					if (k >= i)
+					arr1[i] = (double*)malloc((na - 1) * sizeof(double));
+				}
+				for (int j = 1; j < na; j++)
+				{
+					for (int k = 0; k < na - 1; k++)
 					{
-						arr1[j - 1][k] = arr[j][k + 1];
-					}
-					else
-					{
-						arr1[j - 1][k] = arr[j][k];
+						if (k >= i)
+						{
+							arr1[j - 1][k] = arr[j][k + 1];
+						}
+						else
+						{
+							arr1[j - 1][k] = arr[j][k];
+						}
 					}
 				}
+				s = s + hhlx(arr1, na - 1) * pow(-1, i) * arr[0][i];
+				for (int i = 0; i < na - 1; i++)
+				{
+					free(arr1[i]);
+				}
+				free(arr1);
 			}
-			s = s + hhlx(arr1, na - 1) * pow(-1, i) * arr[0][i];
-			for (int i = 0; i < na - 1; i++)
-			{
-				free(arr1[i]);
-			}
-			free(arr1);
 		}
 		return s;
 	}
@@ -172,6 +175,24 @@ matrix* Mnew(int m, int n)
 	return a;
 }
 
+void Minit(matrix* a)
+{
+	a->inv = Minv(a);
+	a->inv->inv = a;
+	a->T = Mtrans(a);
+	a->T->T = a;
+	a->inv->T = Mtrans(a->inv);
+	a->T->inv = a->inv->T;
+	a->inv->T->T = a->inv;
+	a->T->inv->inv = a->T;
+	a->inv->T->inv = a->T;
+	a->T->inv->T = a->inv;
+	a->det = hhlx(a->A, a->m);
+	a->inv->det = 1 / a->det;
+	a->T->det = a->det;
+	a->inv->T->det = a->inv->det;
+}
+
 void Mprintf(matrix* a)
 {
 	for (int i = 0; i < a->m; i++)
@@ -298,7 +319,7 @@ matrix* Mdiv(matrix* a, matrix* b)
 	return c;
 }
 
-void Mfree(matrix* a)
+void mfree(matrix* a)
 {
 	for (int i = 0; i < a->m; i++)
 	{
@@ -306,4 +327,12 @@ void Mfree(matrix* a)
 	}
 	free(a->A);
 	free(a);
+}
+
+void Mfree(matrix* a)
+{
+	mfree(a->inv->T);
+	mfree(a->inv);
+	mfree(a->T);
+	mfree(a);
 }

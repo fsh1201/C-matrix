@@ -3,49 +3,48 @@
 int main()
 {
 	matrix* d;
-	d = Mnew(2, 2);
+	d = Mnew(3, 3);
 	d->A[0][0] = 1;
 	d->A[0][1] = 2;
 	d->A[1][0] = 3;
 	d->A[1][1] = 4;
+	d->A[0][2] = 6.5;
+	d->A[1][2] = 0;
+	d->A[2][0] = 0;
+	d->A[2][1] = 8;
+	d->A[2][2] = 3.6;
 	
+	Minit(d);
 	printf("输入的矩阵为：\n");
 	Mprintf(d);
-	matrix* dinv, * dt, * ddt, * ddinv, * dprd, * dmd, * ddd, * dpld;
-	dinv = Minv(d);
 	printf("矩阵逆为：\n");
-	Mprintf(dinv);
-	dt = Mtrans(d);
+	Mprintf(d->inv);
 	printf("矩阵转置为：\n");
-	Mprintf(dt);
-	ddt = Mmulti(d, dt);
-	printf("矩阵与转置相乘：\n");
-	Mprintf(ddt);
-	ddinv = Mmulti(d, dinv);
-	printf("矩阵与逆相乘为：\n");
-	Mprintf(ddinv);
-	dprd = Mdotpro(d, d);
-	printf("矩阵点乘为：\n");
-	Mprintf(dprd);
-	ddd = Mdiv(d, d);
-	printf("矩阵点除为：\n");
-	Mprintf(ddd);
-	dmd = Mminus(d, d);
-	printf("矩阵相减为：\n");
-	Mprintf(dmd);
-	dpld = Mplus(d, d);
-	printf("矩阵相加为：\n");
-	Mprintf(dpld);
+	Mprintf(d->T);
+
+	printf("矩阵转置的逆：\n");
+	Mprintf(d->T->inv);
+	printf("矩阵逆的转置：\n");
+	Mprintf(d->inv->T);
+	Mprintf("矩阵转置的逆的转置：\n");
+	Mprintf(d->T->inv->T);
+	printf("矩阵转置的逆的转置的逆的转置：\n");
+	Mprintf(d->T->inv->T->inv->T);
+	printf("矩阵逆的逆：\n");
+	Mprintf(d->inv->inv);
+	printf("转置的转置的逆的逆：\n");
+	Mprintf(d->T->T->inv->inv);
+	printf("逆的逆的转置的转置：\n");
+	Mprintf(d->inv->inv->T->T);
+	printf("矩阵的行列式：%f\n", d->det);
+	printf("矩阵的逆的行列式：%f\n", d->inv->det);
+	printf("矩阵的逆的转置的行列式：%f\n", d->inv->T->det);
+	printf("矩阵的转置的逆的转置的逆的转置的逆的逆的行列式：%f\n", d->T->inv->T->inv->T->inv->inv->det);
+	printf("矩阵的转置的逆的行列式：%f\n", d->T->inv->det);
+	printf("矩阵的逆的转置的逆的行列式：%f\n", d->inv->T->inv->det);
+	printf("矩阵的转置的逆的逆的行列式：%f\n", d->T->inv->inv->det);
 
 	Mfree(d);
-	Mfree(dt);
-	Mfree(dinv);
-	Mfree(ddt);
-	Mfree(ddinv);
-	Mfree(dprd);
-	Mfree(ddd);
-	Mfree(dmd);
-	Mfree(dpld);
 
 	return 0;
 }

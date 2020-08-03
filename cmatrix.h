@@ -2,11 +2,17 @@
 #include <math.h>
 #include <stdio.h>
 
-typedef struct {
+typedef struct Matrix matrix;
+
+struct Matrix{
 	double** A;
 	int m;
 	int n;
-} matrix;
+	double det;
+	matrix* inv;
+	matrix* T;
+};
+
 
 /*行列式*/
 double hhlx(double** arr, int na);
@@ -19,6 +25,8 @@ double** TA(double** a, int ma, int na);
 
 /*创建m行n列新矩阵*/
 matrix* Mnew(int m, int n);
+/*初始化矩阵*/
+void Minit(matrix* a);
 /*输出矩阵a*/
 void Mprintf(matrix* a);
 /*矩阵a的逆*/
@@ -28,6 +36,7 @@ matrix* Mmulti(matrix* a, matrix* b);
 /*转置矩阵*/
 matrix* Mtrans(matrix* a);
 /*释放矩阵*/
+void mfree(matrix* a);
 void Mfree(matrix* a);
 /*矩阵相加*/
 matrix* Mplus(matrix* a, matrix* b);
